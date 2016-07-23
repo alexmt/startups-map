@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "experimentalDecorators": true
+  },
+  "files": [
+    "src/ui/scripts/browser.ts"
+  ]
+}
