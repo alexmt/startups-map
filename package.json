@@ -16,6 +16,7 @@
     "browserify": "^13.0.1",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-flatten": "^0.3.0",
     "gulp-notify": "^2.2.0",
     "gulp-typescript": "^2.13.6",
     "gulp-watch": "^4.3.8",

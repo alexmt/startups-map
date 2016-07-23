@@ -10,6 +10,7 @@ const concat = require('gulp-concat');
 const watch = require('gulp-watch')
 const watchify = require('watchify');
 const notify = require('gulp-notify');
+const flatten = require('gulp-flatten');
 
 const SRC_DIR = 'src/ui'
 const DIST_DIR = 'dist'
@@ -20,8 +21,8 @@ function appScript(watchChanges) {
 			packageCache: {}, // required for watchify
 			fullPaths: watchChanges, // required to be true only for watchify
 		})
-    .add(`${SRC_DIR}/scripts/browser.ts`)
-    .plugin(tsify, { target: 'es6', experimentalDecorators: true })
+    .add(`${SRC_DIR}/app/main.ts`)
+    .plugin(tsify, require('./tsconfig.json'))
 		.transform(babelify, { extensions: [ '.tsx', '.ts' ] });
 	bundler = watchChanges ? watchify(bundler) : bundler;
 
@@ -51,7 +52,9 @@ function vendorScript() {
 }
 
 function staticFiles(watchChanges) {
-	return (watchChanges ? watch : gulp.src)([`${SRC_DIR}/index.html`]).pipe(gulp.dest(DIST_DIR));
+	return (watchChanges ? watch : gulp.src)(`${SRC_DIR}/**/*.html`, { ignoreInitial: false })
+			.pipe(flatten())
+			.pipe(gulp.dest(DIST_DIR));
 }
 
 function serve() {
@@ -72,4 +75,4 @@ gulp.task('static:w', () => staticFiles(true));
 gulp.task('vendorScript', vendorScript);
 gulp.task('build', ['static', 'vendorScript', 'appScript']);
 gulp.task('serve', serve);
-gulp.task('dev', ['static:w', 'appScript:w', 'serve'])
+gulp.task('dev', ['static:w', 'appScript:w', 'vendorScript', 'serve'])

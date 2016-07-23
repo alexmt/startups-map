@@ -5,6 +5,6 @@
   },
   "compileOnSave": false,
   "files": [
-    "src/ui/scripts/browser.ts"
+    "src/ui/main.ts"
   ]
 }
