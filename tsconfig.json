@@ -5,6 +5,6 @@
   },
   "compileOnSave": false,
   "files": [
-    "src/ui/main.ts"
+    "src/ui/app/main.ts"
   ]
 }

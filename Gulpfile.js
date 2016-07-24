@@ -11,6 +11,7 @@ const watch = require('gulp-watch')
 const watchify = require('watchify');
 const notify = require('gulp-notify');
 const flatten = require('gulp-flatten');
+const extend = require('extend');
 
 const SRC_DIR = 'src/ui'
 const DIST_DIR = 'dist'
@@ -22,7 +23,7 @@ function appScript(watchChanges) {
 			fullPaths: watchChanges, // required to be true only for watchify
 		})
     .add(`${SRC_DIR}/app/main.ts`)
-    .plugin(tsify, require('./tsconfig.json'))
+    .plugin(tsify, extend({}, require('./tsconfig.json'), { sourceMap: true }))
 		.transform(babelify, { extensions: [ '.tsx', '.ts' ] });
 	bundler = watchChanges ? watchify(bundler) : bundler;
 
