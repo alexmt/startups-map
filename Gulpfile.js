@@ -12,6 +12,7 @@ const watchify = require('watchify');
 const notify = require('gulp-notify');
 const flatten = require('gulp-flatten');
 const extend = require('extend');
+const gutil = require('gulp-util');
 
 const SRC_DIR = 'src/ui'
 const DIST_DIR = 'dist'
@@ -30,12 +31,12 @@ function appScript(watchChanges) {
 	function rebundle() {
 		let start = Date.now();
 		return bundler.bundle()
-	    .on('error', notify.onError('Error: <%= error.message %>'))
+	    .on('error', process.env.NODE_ENV !== 'ci' ? notify.onError('Error: <%= error.message %>') : gutil.log)
 			.pipe(source('app.js'))
 	    .pipe(gulp.dest(DIST_DIR))
-			.pipe(notify(function () {
+			.pipe(process.env.NODE_ENV !== 'ci' ? notify(function () {
 				return `App JS bundle built in ${(Date.now() - start)} ms`;
-			}));;
+			}) : gutil.noop());
 	}
 
 	bundler.on('update', rebundle);

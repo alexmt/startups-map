@@ -1,7 +1,5 @@
 language: node_js
 node_js:
   - "6"
-before_script:
-  - npm install
 script:
-  - ./node_modules/.bin/gulp build
+  - NODE_ENV=ci ./node_modules/.bin/gulp build
