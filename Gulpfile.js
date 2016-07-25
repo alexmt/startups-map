@@ -13,6 +13,7 @@ const notify = require('gulp-notify');
 const flatten = require('gulp-flatten');
 const extend = require('extend');
 const gutil = require('gulp-util');
+const ghPages = require('gulp-gh-pages');
 
 const SRC_DIR = 'src/ui'
 const DIST_DIR = 'dist'
@@ -70,6 +71,12 @@ function serve() {
 	});
 }
 
+function deploy() {
+  return gulp.src('./dist/**/*').pipe(ghPages({
+		remoteUrl: 'git@github.com:alexmt/startups-map.git'
+	}));
+}
+
 gulp.task('appScript', () => appScript(false));
 gulp.task('appScript:w', () => appScript(true));
 gulp.task('static', () => staticFiles(false));
@@ -78,3 +85,4 @@ gulp.task('vendorScript', vendorScript);
 gulp.task('build', ['static', 'vendorScript', 'appScript']);
 gulp.task('serve', serve);
 gulp.task('dev', ['static:w', 'appScript:w', 'vendorScript', 'serve'])
+gulp.task('deploy', deploy);
