@@ -19,7 +19,7 @@ const DIST_DIR = 'dist';
 
 function appScript(watchChanges) {
   let bundler = browserify({
-    debug: true,
+    debug: process.env.NODE_ENV == 'dev',
     cache: {}, // required for watchify
     packageCache: {}, // required for watchify
     fullPaths: watchChanges, // required to be true only for watchify
@@ -31,8 +31,11 @@ function appScript(watchChanges) {
 
   function rebundle() {
     let start = Date.now();
-    return bundler.bundle()
-      .on('error', process.env.NODE_ENV !== 'ci' ? notify.onError('Error: <%= error.message %>') : gutil.log)
+    let  bundle = bundler.bundle();
+    if (process.env.NODE_ENV == 'dev') {
+      bundle.on('error', process.env.NODE_ENV !== 'ci' ? notify.onError('Error: <%= error.message %>') : gutil.log);
+    }
+    return bundle
       .pipe(source('app.js'))
       .pipe(gulp.dest(DIST_DIR))
       .pipe(process.env.NODE_ENV !== 'ci' ? notify(function () {
