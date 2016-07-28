@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "rootDir": ".",
+    "moduleResolution": "node"
   },
   "compileOnSave": false,
-  "files": [
-    "src/ui/app/main.ts"
+  "exclude": [
+    "node_modules"
   ]
 }

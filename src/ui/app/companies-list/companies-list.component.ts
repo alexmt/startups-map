@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService, Company } from '../shared/index';
 
 @Component({
-  selector: 'company-list',
-  templateUrl: 'company-list.component.html'
+  selector: 'companies-list',
+  templateUrl: 'companies-list.component.html'
 })
-export class CompanyList implements OnInit {
+export class CompaniesList implements OnInit {
   companies: Company[] = [];
   companyService: CompanyService;
 
