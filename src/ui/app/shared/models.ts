@@ -1,4 +1,7 @@
-import { Location } from './location';
+export interface Location {
+  lng: number;
+  lat: number;
+}
 
 export interface Company {
   name: string;
