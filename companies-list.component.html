@@ -1,3 +1,1 @@
-<div *ngFor="let company of companies">
-  {{company.name}}
-</div>
+<a *ngFor="let company of companies" [routerLink]="" [queryParams]="{name: company.name}">{{company.name}}</a>
