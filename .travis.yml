@@ -13,4 +13,4 @@ before_script:
   - git config --global user.email "$COMMIT_AUTHOR_EMAIL"
 script:
   - ./node_modules/.bin/gulp build
-  - if [[ $TRAVIS_BRANCH == master && TRAVIS_EVENT_TYPE == push ]]; then ./node_modules/.bin/gulp deploy; fi
+  - if [[ $TRAVIS_BRANCH == master && $TRAVIS_EVENT_TYPE == push ]]; then ./node_modules/.bin/gulp deploy; fi
