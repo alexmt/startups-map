@@ -3,6 +3,8 @@ import { provide } from '@angular/core';
 import { AppComponent } from './app.component';
 import { appRouterProviders } from './app.routes';
 import { GoogleMapsService, CompanyService } from './shared/index';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 
 window['startupsMap'] = {
   bootstrapApp() {
@@ -10,7 +12,8 @@ window['startupsMap'] = {
       googleMapsService => bootstrap(AppComponent, [
         appRouterProviders,
         provide(GoogleMapsService, { useValue: googleMapsService  }),
-        provide(CompanyService, { useClass: CompanyService })
+        provide(CompanyService, { useClass: CompanyService }),
+        provide(LocationStrategy, { useClass: HashLocationStrategy })
       ]));
   }
 };
