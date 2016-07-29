@@ -10,4 +10,8 @@ export class GoogleMap {
       position: location
     });
   }
+
+  setCenter(location: Location) {
+    this.map.setCenter(location);
+  }
 }

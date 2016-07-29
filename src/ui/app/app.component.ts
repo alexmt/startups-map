@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { CompaniesList } from './companies-list/companies-list.component';
-import { CompaniesMap } from './companies-map/companies-map.component';
+import { CompaniesListComponent } from './companies-list/companies-list.component';
+import { CompaniesMapComponent } from './companies-map/companies-map.component';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
   selector: 'startups-app',
   templateUrl: 'app.component.html',
   styles: ['.map { height: 500px; }'],
-  directives: [CompaniesList, CompaniesMap]
+  directives: [CompaniesListComponent, CompaniesMapComponent, ROUTER_DIRECTIVES]
 })
 export class AppComponent {
 
