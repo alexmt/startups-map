@@ -42521,7 +42521,7 @@ var CompaniesList = function () {
 }();
 exports.CompaniesList = CompaniesList;
 
-},{"../shared/index":335,"@angular/core":148}],330:[function(require,module,exports){
+},{"../shared/index":336,"@angular/core":148}],330:[function(require,module,exports){
 "use strict";
 
 var __decorate = this && this.__decorate || function (decorators, target, key, desc) {
@@ -42549,8 +42549,10 @@ var CompaniesMap = function () {
         this.companyService.getCompanies().then(function (companies) {
             if (companies.length > 0) {
                 var mapContainer = $(_this.el.nativeElement).find('.map-container')[0];
-                var center = companies[0].addressLocation;
-                _this.googleMapsService.initMap(mapContainer, { lat: center.latitude, lng: center.longitude });
+                var map_1 = _this.googleMapsService.initMap(mapContainer, companies[0].addressLocation, 16);
+                companies.forEach(function (company) {
+                    return map_1.addMarker(company.name, company.addressLocation);
+                });
             }
         });
     };
@@ -42563,7 +42565,7 @@ var CompaniesMap = function () {
 }();
 exports.CompaniesMap = CompaniesMap;
 
-},{"../shared/index":335,"@angular/core":148}],331:[function(require,module,exports){
+},{"../shared/index":336,"@angular/core":148}],331:[function(require,module,exports){
 "use strict";
 
 var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
@@ -42578,22 +42580,22 @@ window['startupsMap'] = {
     }
 };
 
-},{"./app.component":328,"./shared/index":335,"@angular/core":148,"@angular/platform-browser-dynamic":238}],332:[function(require,module,exports){
+},{"./app.component":328,"./shared/index":336,"@angular/core":148,"@angular/platform-browser-dynamic":238}],332:[function(require,module,exports){
 "use strict";
 
 var companies = [{
     name: 'Applatix',
     address: '111 W. Evelyn Avenue Sunnyvale, CA 94086',
     addressLocation: {
-        longitude: -122.029506,
-        latitude: 37.377728
+        lng: -122.029506,
+        lat: 37.377728
     }
 }, {
     name: 'Platform9',
     address: '350 Altair Way Sunnyvale, CA 94086',
     addressLocation: {
-        longitude: -122.0346637,
-        latitude: 37.377869
+        lng: -122.032496,
+        lat: 37.377843
     }
 }];
 exports.companies = companies;
@@ -42613,7 +42615,7 @@ var companies_1 = require('./companies');
 var CompanyService = function () {
     function CompanyService() {}
     CompanyService.prototype.getCompanies = function () {
-        return new Promise(function (resolve, reject) {
+        return new Promise(function (resolve) {
             resolve(companies_1.companies);
         });
     };
@@ -42625,6 +42627,26 @@ exports.CompanyService = CompanyService;
 },{"./companies":332,"@angular/core":148}],334:[function(require,module,exports){
 "use strict";
 
+var GoogleMap = function () {
+    function GoogleMap(google, map) {
+        this.google = google;
+        this.map = map;
+    }
+    GoogleMap.prototype.addMarker = function (title, location) {
+        new this.google.maps.Marker({
+            title: title,
+            map: this.map,
+            position: location
+        });
+    };
+    return GoogleMap;
+}();
+exports.GoogleMap = GoogleMap;
+
+},{}],335:[function(require,module,exports){
+"use strict";
+
+var google_map_1 = require('./google-map');
 var GoogleMapsService = function () {
     function GoogleMapsService(google) {
         this.google = google;
@@ -42644,18 +42666,19 @@ var GoogleMapsService = function () {
         }
         return GoogleMapsService.servicePromise;
     };
-    GoogleMapsService.prototype.initMap = function (container, center) {
-        return new this.google.maps.Map(container, {
+    GoogleMapsService.prototype.initMap = function (container, center, zoom) {
+        var map = new this.google.maps.Map(container, {
             center: center,
-            zoom: 16
+            zoom: zoom
         });
+        return new google_map_1.GoogleMap(this.google, map);
     };
     GoogleMapsService.servicePromise = null;
     return GoogleMapsService;
 }();
 exports.GoogleMapsService = GoogleMapsService;
 
-},{}],335:[function(require,module,exports){
+},{"./google-map":334}],336:[function(require,module,exports){
 "use strict";
 
 function __export(m) {
@@ -42664,4 +42687,4 @@ function __export(m) {
 __export(require('./company.service'));
 __export(require('./google-maps.service'));
 
-},{"./company.service":333,"./google-maps.service":334}]},{},[331]);
+},{"./company.service":333,"./google-maps.service":335}]},{},[331]);
