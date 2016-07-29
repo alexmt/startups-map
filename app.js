@@ -47351,15 +47351,16 @@ var core_1 = require('@angular/core');
 var app_component_1 = require('./app.component');
 var app_routes_1 = require('./app.routes');
 var index_1 = require('./shared/index');
+var common_1 = require('@angular/common');
 window['startupsMap'] = {
     bootstrapApp: function () {
         index_1.GoogleMapsService.create(window, 'AIzaSyB6grVLtUhv608zkdrtGmgY_ziwU7dLNfM').then(function (googleMapsService) {
-            return platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [app_routes_1.appRouterProviders, core_1.provide(index_1.GoogleMapsService, { useValue: googleMapsService }), core_1.provide(index_1.CompanyService, { useClass: index_1.CompanyService })]);
+            return platform_browser_dynamic_1.bootstrap(app_component_1.AppComponent, [app_routes_1.appRouterProviders, core_1.provide(index_1.GoogleMapsService, { useValue: googleMapsService }), core_1.provide(index_1.CompanyService, { useClass: index_1.CompanyService }), core_1.provide(common_1.LocationStrategy, { useClass: common_1.HashLocationStrategy })]);
         });
     }
 };
 
-},{"./app.component":381,"./app.routes":382,"./shared/index":390,"@angular/core":148,"@angular/platform-browser-dynamic":238}],386:[function(require,module,exports){
+},{"./app.component":381,"./app.routes":382,"./shared/index":390,"@angular/common":1,"@angular/core":148,"@angular/platform-browser-dynamic":238}],386:[function(require,module,exports){
 "use strict";
 
 var companies = [{
