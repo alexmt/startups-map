@@ -16,8 +16,8 @@ export class CompaniesMap implements OnInit {
     this.companyService.getCompanies().then(companies => {
       if (companies.length > 0) {
         const mapContainer = $(this.el.nativeElement).find('.map-container')[0];
-        const center = companies[0].addressLocation;
-        this.googleMapsService.initMap(mapContainer, { lat: center.latitude, lng: center.longitude });
+        const map = this.googleMapsService.initMap(mapContainer, companies[0].addressLocation, 16);
+        companies.forEach(company => map.addMarker(company.name, company.addressLocation));
       }
     });
   }

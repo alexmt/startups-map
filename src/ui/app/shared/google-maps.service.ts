@@ -1,3 +1,6 @@
+import { GoogleMap } from './google-map';
+import { Location } from './models';
+
 export class GoogleMapsService {
   private static servicePromise: Promise<GoogleMapsService> = null;
 
@@ -19,10 +22,11 @@ export class GoogleMapsService {
 
   constructor(private google: any) {}
 
-  initMap(container, center: {lat: number, lng: number}) {
-    return new this.google.maps.Map(container, {
+  initMap(container, center: Location, zoom: number): GoogleMap {
+    const map = new this.google.maps.Map(container, {
       center: center,
-      zoom: 16
+      zoom: zoom
     });
+    return new GoogleMap(this.google, map);
   }
 }
